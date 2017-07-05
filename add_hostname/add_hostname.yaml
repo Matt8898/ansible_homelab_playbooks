@@ -1,0 +1,13 @@
+- hosts: all
+  sudo: true
+  tasks:
+  - name: "Build hosts file"
+    template:
+      src=etc/hosts.j2
+      dest=/etc/pihole/lan.list
+    when: hostvars[inventory_hostname]['ansible_default_ipv4']['address'] == "192.168.0.160"
+  - name: "Restart dnsmasq"
+    service:
+      name: dnsmasq
+      state: restarted
+    when: hostvars[inventory_hostname]['ansible_default_ipv4']['address'] == "192.168.0.160"

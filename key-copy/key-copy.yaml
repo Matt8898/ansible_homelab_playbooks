@@ -1,0 +1,8 @@
+- hosts: all
+  sudo: true
+  tasks:
+  - name: Copy keys
+    authorized_key:
+      user: root
+      state: present
+      key: "{{ lookup('file', '/home/matt/.ssh/id_ed25519.pub') }}"
